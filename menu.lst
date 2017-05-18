@@ -1,0 +1,30 @@
+color light-green/black white/green green/black light-blue/black
+color border=0x00FF00
+
+/boot/utils/menuset 0 0 0 0 0 0 4 60 3
+
+# allow vbeprobe command to output text
+debug 1
+# list all available BIOS modes
+vbeprobe > (md)0x220+5
+# turn off text output from future commands
+debug off
+# clear the display to keep it clean!
+clear
+# look for 640, 800 and 1024 modes and list them to the screen if found
+cat --locate=", 640" (md)0x220+5 > nul && set GM=640 && echo 640 xres supported
+cat --locate=", 800x600" (md)0x220+5 > nul && set GM=800 && echo 800x600 supported
+cat --locate=", 1024x768" (md)0x220+5 > nul && set GM=1024 && echo 1024x768 supported
+# wait 3 seconds so the user can see the modes supported by the BIOS
+# pause --wait=3
+# now change to the highest resolution supported and load the matching bitmap
+if "%GM%"=="1024" graphicsmode -1 1024 100:1000 24:32 && splashimage (hd0,0)/boot/splash3.bmp.gz
+if "%GM%"=="800" graphicsmode -1 800 100:1000 24:32 && splashimage (hd0,0)/boot/splash2.bmp.gz
+if "%GM%"=="640" graphicsmode -1 640 100:1000 16:32 && splashimage (hd0,0)/boot/splash1.bmp.gz
+# allow text output from any future commands so we can debug the menu items
+debug 1
+
+set FIRADISK=/images/firadisk.gz
+set MEMDISK=/images/memdisk
+
+configfile /boot/main.lst
