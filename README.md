@@ -4,7 +4,7 @@ Multiboot USB using grub4dos and ISO images
 Grub4dos download  
 http://gna.org/projects/grub4dos/
 
-Grub4dos repository with newest versions by https://github.com/chenall
+Grub4dos repository with newest versions by https://github.com/chenall  
 http://grub4dos.chenall.net/
 
 Grub4dos guide  
