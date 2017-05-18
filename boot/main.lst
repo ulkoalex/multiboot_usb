@@ -1,0 +1,122 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+timeout 10
+
+root (hd0,0)
+
+### MENU START
+title		Boot from MBR of 1st HDD
+root		(hd1)
+chainloader	+1
+### MENU END
+
+### MENU START
+title		Boot from 1st HDD partition 1
+root		(hd1,0)
+chainloader	+1
+### MENU END
+
+### MENU START
+title		Boot from 1st HDD partition 2
+root		(hd1,1)
+chainloader	+1
+### MENU END
+
+### MENU START
+title		Boot from MBR of 2nd HDD
+rootnoverify	(hd2)
+chainloader	+1
+### MENU END
+
+### MENU START
+title		Boot from 2nd HDD partition 1
+rootnoverify	(hd2,0)
+chainloader	+1
+### MENU END
+
+### MENU START
+title		Boot from 2nd HDD partition 2
+rootnoverify	(hd2,1)
+chainloader	+1
+### MENU END
+
+
+### MENU START
+menu separator
+title		--------------------
+root
+### MENU END
+
+### MENU START
+title		DOS
+configfile	/boot/dos.lst
+### MENU END
+
+### MENU START
+title		Windows
+configfile	/boot/windows.lst
+### MENU END
+
+### MENU START
+menu separator
+title		--------------------
+root
+### MENU END
+
+### MENU START
+title		Kali
+configfile	/boot/kali.lst
+### MENU END
+
+### MENU START
+title		Knoppix
+configfile	/boot/knoppix.lst
+### MENU END
+
+### MENU START
+title		Puppy
+configfile	/boot/puppy.lst
+### MENU END
+
+### MENU START
+title		Ubuntu
+configfile	/boot/ubuntu.lst
+### MENU END
+
+### MENU START
+#title		Antivirus
+#configfile	/boot/antivirus.lst
+### MENU END
+
+### MENU START
+menu separator
+title		--------------------
+root
+### MENU END
+
+### MENU START
+title		HDD
+configfile	/boot/hdd.lst
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title		Terminal
+commandline
+### MENU END
+
+### MENU START
+title		Reboot
+reboot
+### MENU END
+
+### MENU START
+title		Halt
+halt
+### MENU END
