@@ -1,0 +1,24 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title openSUSE 13.2 KDE Live x86_64 [ kernel ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/openSUSE-13.2-KDE-Live-x86_64.iso
+root (hd0,1)
+find --set-root %ISO%
+map %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /boot/x86_64/loader/linux ramdisk_size=512000 ramdisk_blocksize=4096 showopts isofrom_device=/dev/disk/by-label/FBOOT isofrom_system=%ISO%
+#splash=silent quiet
+initrd /boot/x86_64/loader/initrd
+### MENU END

@@ -1,0 +1,42 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Dr.Web LiveDisk
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/drweb-livedisk-900-cd.iso
+root (hd0,1)
+find --set-root %ISO%
+#attempt to map the iso directly as a contiguous file, but if it fails because the iso file is not contiguous, try to load it into memory as one contiguous block and then map the device 0xff to it
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+#chainloader (0xff)
+root (0xff)
+kernel /casper/vmlinuz boot=casper iso-scan/filename=%ISO% 
+#quiet splash --
+initrd /casper/initrd.lz
+### MENU END
+
+
+### MENU START
+title Kaspersky Rescue Disk [ mem ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/kav_rescue_10.iso
+set CDLABEL=KRD10
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+### MENU END	

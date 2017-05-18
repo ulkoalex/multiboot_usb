@@ -1,0 +1,47 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Knoppix 7 LiveCD
+set ISO=/images/knoppix7.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Knoppix 7 [ kernel ]
+set ISO=/images/knoppix7.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /BOOT/ISOLINUX/LINUX ramdisk_size=100000 lang=ru apm=power-off initrd=minirt.gz nomce libata.force=noncq hpsa.hpsa_allow_any=1 loglevel=1 tz=localtime xkeyboard=us,ru keyboard=ru vga=791 bootfrom=/dev/sda1%ISO%
+initrd /BOOT/ISOLINUX/MINIRT.GZ
+### MENU END
+
+### MENU START
+#title Knoppix 7.2 LiveCD
+#set ISO=/images/knoppix72.iso
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#chainloader (0xff)
+### MENU END
+
+### MENU START
+#title Knoppix 7.2 [ kernel ]
+#set ISO=/images/knoppix72.iso
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#root (0xff)
+#kernel /BOOT/ISOLINUX/LINUX lang=en apm=power-off initrd=minirt.gz nomce libata.force=noncq hpsa.hpsa_allow_any=1 loglevel=1 noprompt bootfrom=/dev/sda1%ISO%
+#initrd /BOOT/ISOLINUX/MINIRT.GZ
+### MENU END

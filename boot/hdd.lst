@@ -1,0 +1,120 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Partition Magic 2012
+set ISO=/images/pmagic_2012_10_10.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+#COM32 linux.c32
+#root (0xff)
+#kernel /boot/syslinux/linux.c32 /pmagic/bzImage edd=off load_ramdisk=1 prompt_ramdisk=0 rw vga=normal loglevel=9 max_loop=256 vmalloc=288MiB  iso-scan/filename=%ISO%
+#initrd /pmagic/initrd.img
+### MENU END
+
+### MENU START
+title Paragon Hard Disk Manager
+set ISO=/images/phdm2008suite_en_20070918.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Acronis Media
+set ISO=/images/acronis.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Acronis Disk Director (bad)
+set ISO=/images/acronisserver.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title GParted live 0.14.1-6 amd64 [user:live]
+set ISO=/images/gparted-live-0.14.1-6-amd64.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live config noswap noprompt ip=frommedia nosplash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.blacklist=yes
+#toram=filesystem.squashfs
+initrd /live/initrd.img
+### MENU END
+
+
+### MENU START
+title GParted live 0.27.0-1 amd64
+set ISO=/images/gparted-live-0.27.0-1-amd64.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live union=overlay username=user config components quiet noswap vga=791 ip= net.ifnames=0 nosplash
+initrd /live/initrd.img
+### MENU END
+
+### MENU START
+title GParted live 0.27.0-1 i686
+set ISO=/images/gparted-live-0.27.0-1-i686.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live union=overlay username=user config components quiet noswap vga=791 ip= net.ifnames=0 nosplash
+initrd /live/initrd.img
+### MENU END
+
+### MENU START
+#title GParted amd64 [user:live]
+#kernel /images/gparted_amd64/vmlinuz boot=live config live-media-path=/images/gparted_amd64/ noswap noprompt toram=filesystem.squashfs ip=frommedia nosplash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.blacklist=yes
+#initrd /images/gparted_amd64/initrd.img
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title Victoria 3.52.3 rus
+set ISO=/images/Victoria_3.52.3_rus.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Victoria 3.52.c rus (VIKSOFT.RU)
+set ISO=/images/Victoria_3.52.c_rus.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+chainloader (0xff)
+### MENU END

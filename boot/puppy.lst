@@ -1,0 +1,48 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /menu.lst
+### MENU END
+
+### MENU START
+title Puppy Lucid [ root:woofwoof ]
+kernel /images/puppy-linux-lucid/vmlinuz pupsfs=sda1:/images/puppy-linux-lucid/lupu_528.sfs
+initrd /images/puppy-linux-lucid/initrd.gz
+### MENU END
+
+### MENU START
+title Puppy Tahr [ root:woofwoof ]
+kernel /images/puppy-linux-tahr/vmlinuz pupsfs=sda1:/images/puppy-linux-tahr/puppy_tahr_6.0.5.sfs
+#pmedia=usbflash
+#pmedia=cd
+initrd /images/puppy-linux-tahr/initrd.gz
+### MENU END
+
+### MENU START - not working, needs sfs
+#title Puppy Lucid [ ISO ]
+#set ISO=/images/puppy-linux-lucid-528.005.iso
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#chainloader (0xff)
+### MENU END
+
+### MENU START - not working, needs sfs
+#title Puppy Lucid [ MEM ]
+#set ISO=/images/puppy-linux-lucid-528.005.iso
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#root (0xff)
+#kernel /vmlinuz pmedia=cd
+#initrd /initrd.gz
+### MENU END
+
+### MENU START - not working, needs sfs
+#title Puppy Lucid [ MEMDISK ]
+#set ISO=/images/puppy-linux-lucid-528.005.iso
+#kernel %MEMDISK% iso
+#initrd %ISO%
+### MENU END

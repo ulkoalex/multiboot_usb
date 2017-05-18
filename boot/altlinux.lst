@@ -1,0 +1,26 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title ALT Linux 4.1 Desktop LiveCD [ kernel ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/altlinux-4.1.1-desktop-i586-live-cd.iso
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 %ISO% (0xff) || map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+set bootpart=uuid:8BFC-8BF6
+#set bootpart=disk:sda,partition:sda2
+#set bootpart=label:FBOOT
+kernel /syslinux/alt0/vmlinuz live fastboot vga=0x314 splash=silent splashcount=17 stagename=live showopts automatic=method:disk,%bootpart%,directory:%ISO% changedisk lang=ru_RU noeject xdriver=auto ramdisk_size=690832
+initrd /syslinux/alt0/full.cz   
+### MENU END

@@ -1,0 +1,85 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Fedora Workstation LiveCD x86_64 25 1.3 [ kernel ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/Fedora-Workstation-Live-x86_64-25-1.3.iso
+set CDLABEL=Fedora-WS-Live-25-1-3
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 %ISO% (0xff) || echo -e $[0104]%ISO% IS NOT CONTIGUOUS! MAPPING TO MEMORY... && map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+#
+#root=live:LABEL=FBOOT
+#root=live:LABEL=FBOOT:%ISO%
+##root=live:UUID=8BFC-8BF6
+#root=live:UUID=8BFC-8BF6:%ISO%
+#iso-scan/filename=%ISO% root=live:CDLABEL=%CDLABEL%
+#
+kernel /isolinux/vmlinuz root=live:CDLABEL=%CDLABEL% iso-scan/filename=%ISO% rootfstype=auto ro rd.live.image quiet rhgb rd.luks=0 rd.md=0 rd.dm=0
+initrd /isolinux/initrd.img
+### MENU END
+
+### MENU START
+title Fedora Workstation LiveCD x86_64 25 1.3 [ kernel mem ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/Fedora-Workstation-Live-x86_64-25-1.3.iso
+set CDLABEL=Fedora-WS-Live-25-1-3
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /isolinux/vmlinuz root=live:CDLABEL=%CDLABEL% iso-scan/filename=%ISO% rootfstype=auto ro rd.live.image quiet rhgb rd.luks=0 rd.md=0 rd.dm=0
+initrd /isolinux/initrd.img
+### MENU END
+
+### MENU START - not working, needs iso-scan/filename
+#title Fedora Workstation LiveCD x86_64 25 1.3 [ chainloader ]
+#set ISO=/images/Fedora-Workstation-Live-x86_64-25-1.3.iso
+#root (hd0,1)
+#find --set-root --ignore-floppies --ignore-cd %ISO%
+#map --heads=0 --sectors-per-track=0 %ISO% (0xff) || map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#chainloader (0xff)
+### MENU END
+
+### MENU START
+#title Fedora Workstation LiveCD x86_64 25 1.3 [ kernel unpacked ]
+#kernel /images/fedora/vmlinuz live-media-path=/images/fedora/ ive_dir=/images/fedora ro rd.live.image rd.luks=0 rd.md=0 rd.dm=0
+#kernel /images/fedora/vmlinuz root=/images/fedora/squashfs.img ro rd.live.image 
+#initrd /images/fedora/initrd.img
+### MENU END
+
+#BOOT_IMAGE=/vmlinuz-4.8.15-300.fc25.x86_64 root=/dev/mapper/fedora-root ro rd.lvm.lv=fedora/root rd.lvm.lv=fedora/swap rhgb quiet LANG=en_US.UTF-8 
+#BOOT_IMAGE=/vmlinuz-4.8.15-300.fc25.x86_64 root=/dev/mapper/fedora-root ro rd.lvm.lv=fedora/root
+
+#rootfstype=auto ro rd.live.image quiet rhgb rd.luks=0 rd.md=0 rd.dm=0
+#rd.lvm.lv -- only activate the logical volumes with the given name. rd.lvm.lv can be specified multiple times on the kernel command line.
+#rd.luks=0 - disable crypto LUKS detection
+#rd.md=0 - disable MD RAID detection
+#rd.dm=0 - disable DM RAID detection
+#rootfstype=<filesystem type> "auto" if not specified. Example: rootfstype=ext3, rootfstype=ntfs, rootfstype=ntfs-3g NO NTFS USB!!!
+#rd.live.image (liveimg deprecated)
+#ro - force mounting / and /usr (if it is a separate device) read-only.
+#rhgb = redhat graphical boot - This is a GUI mode booting screen with most of the information hidden
+#quiet = hides the majority of boot messages before rhgb starts
+#quiet rhgb 
+#losetup -f find the first unused loop device. If a file argument is present, use this device. Otherwise, print its name.
+#xforcevesa ignore_uuid
+#nomodeset basic graphics mode
+
+ 

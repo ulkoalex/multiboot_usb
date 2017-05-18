@@ -1,0 +1,51 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Kali Light x64 [ root,toor ]
+set ISO=/images/kali-linux-light-2016.2-amd64.iso
+find --set-root %ISO%
+map %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live username=root hostname=kali config
+initrd /live/initrd.img
+### MENU END
+
+### MENU START
+title Kali Light x64 [ noconfig quiet splash ]
+set ISO=/images/kali-linux-light-2016.2-amd64.iso
+find --set-root %ISO%
+map %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live username=root hostname=kali noconfig=sudo quiet splash
+initrd /live/initrd.img
+### MENU END
+
+### MENU START
+title Kali Light x64 [ MEM ]
+set ISO=/images/kali-linux-light-2016.2-amd64.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live username=root hostname=kali config
+initrd /live/initrd.img
+### MENU END
+
+### MENU START
+set ISO=/images/kali-linux-light-2016.2-amd64.iso
+title Kali Light x64 (failsafe mode)
+find --set-root %ISO%
+map %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /live/vmlinuz findiso=%ISO% boot=live config username=root hostname=kali components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+initrd /live/initrd.img
+### MENU END

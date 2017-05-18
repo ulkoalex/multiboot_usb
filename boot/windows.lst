@@ -1,0 +1,140 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Extra Small WinXP (no net)
+set ISO=/images/extrasmallwinxp.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --read-only
+#avoid changing an ISO file accidentally
+map --hook
+chainloader (0xff)
+#chainloader /ntldr
+### MENU END
+
+### MENU START
+title Hirens Boot CD (net)
+set ISO=/images/hirens.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title WinXPE (net)
+set ISO=/images/xpe.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Alkid LiveCD (no net)
+set ISO=/images/alkid.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title Win XP SP3 2010 Install step 1
+set ISO=/images/xpsp32010.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map (hd0) (hd1)
+map (hd1) (hd0)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Win XP SP3 2010 Install step 2
+set ISO=/images/xpsp32010.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map (hd0) (hd1)
+map (hd1) (hd0)
+map --hook
+root (hd0,0)
+chainloader +1
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title Live Seven (net, hdd)
+set ISO=/images/liveseven.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title ReactOS 0.4.3 LiveCD
+set ISO=/images/ReactOS-0.4.3-live.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+#title Windows 7 SP1
+#map --mem (md)+4 (9)
+#map /Boot/Windows/7.iso (0xff)  
+#map (hd0) (hd1)
+#map (hd1) (hd0)
+#map --rehook
+#write (9) [FiraDisk]\nStartOptions=cdrom,vmem=find:/Boot/Windows/7.iso;\n\0
+#chainloader (0xff)
+### MENU END
+
+### MENU START
+#title Windows 8.1 Pro 64bit XTreme v.2.0
+#Create a virtual floppy disk drive (99) - any number below 128 is a floppy disk, 128-159 is a hard disk and 160-255 is a CD - these are BIOS device numbers.
+#map --mem (md)0x800+4 (99)
+#Write random data from memory device to floppy, 4 x 512-byte sectors
+#physical address range from 1M to 32M is reserved for grub4dos internal code and data. Users should not use this range (md)0x800 - (md)0x10000
+#32MB = 0x2000000  or (md)0x10000
+#map /Boot/Win81_Pro.iso (0xff)
+#checkrange 0x80 read 0x8280 && map (hd0) (hd1)
+#checkrange 0x80 read 0x8280 && map (hd1) (hd0) 
+#map --hook
+#The 'write (99)' line writes a string to the first 'sector' of the virtual floppy disk.
+#write (99) [FiraDisk]\nStartOptions=cdrom,vmem=find:/Boot/Win81_Pro.iso;\n\0
+#When Hiren's XP boots, the Firadisk driver is loaded (it is already installed in Hirens XP)
+#When the Firadisk driver loads it searches all floppy disk devices for a string beginning with [Firadisk].
+#When it finds this string in device 99, it parses it to get the name of the ISO.
+#The find command tells Firadisk to search all volumes for /path.iso.
+#When Firadisk finds the ISO it mounts is as a virtual CD
+#FiraDisk tells XP to write the StartOptions to Registry
+#chainloader (0xff)/BOOTMGR || chainloader (0xff)
+### MENU END

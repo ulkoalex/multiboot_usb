@@ -1,0 +1,56 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title Gentoo LiveDVD amd64 multilib 2016.07.04 [ kernel ]
+echo
+echo -e $[0104]WARNING: THIS WILL NOT WORK ON NTFS DRIVES (use FAT32 or ext2/3/4)
+echo
+pause --wait=5
+set ISO=/images/gentoo-livedvd-amd64-multilib-20160704.iso
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 %ISO% (0xff) || map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /isolinux/gentoo root=/dev/ram0 init=/linuxrc dokeymap aufs looptype=squashfs loop=/image.squashfs cdroot console=tty1 isoboot=%ISO% video=uvesafb:1024x768-32,mtrr:3,ywrap
+initrd /isolinux/gentoo.xz
+### MENU END
+#splash=silent,theme:default quiet 
+
+### MENU START
+title Gentoo LiveDVD amd64 multilib 2016.07.04 [ kernel mem ]
+set ISO=/images/gentoo-livedvd-amd64-multilib-20160704.iso
+root (hd0,1)
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+root (0xff)
+kernel /isolinux/gentoo root=/dev/ram0 init=/linuxrc dokeymap aufs looptype=squashfs loop=/image.squashfs cdroot console=tty1 isoboot=%ISO% 
+initrd /isolinux/gentoo.xz
+### MENU END
+
+### MENU START - not working, needs isoboot
+#title Gentoo LiveDVD [ chainloader ]
+#set ISO=/images/gentoo-livedvd-amd64-multilib-20160704.iso
+#root (hd0,1)
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 %ISO% (0xff) || map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#chainloader (0xff)
+### MENU END
+
+### MENU START - not working, needs isoboot
+#title Gentoo LiveDVD [ chainloader mem ]
+#set ISO=/images/gentoo-livedvd-amd64-multilib-20160704.iso
+#root (hd0,1)
+#find --set-root %ISO%
+#map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+#map --hook
+#chainloader (0xff)
+### MENU END

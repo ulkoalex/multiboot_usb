@@ -1,0 +1,82 @@
+#autonumber boot entries with a space after the number
+write 0x8274 0x2001
+
+### MENU START
+title << main menu
+configfile /boot/main.lst
+### MENU END
+
+### MENU START
+title DOS 1
+set ISO=/images/DOS1.ima
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title DOS 2
+set ISO=/images/DOS2.ima
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title DOS LiveCD
+set ISO=/images/doslivecd.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title ATI Flash
+set ISO=/images/atiflash.iso
+find --set-root %ISO%
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+
+### MENU START
+title ATI Flash [ ram ]
+set ISO=/images/atiflash.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+menu separator
+title --------------------
+root
+### MENU END
+
+### MENU START
+title UltraBootCD [ mem ]
+set ISO=/images/ubcdfree.iso
+find --set-root %ISO%
+map --mem %FIRADISK% (fd0)
+map --heads=0 --sectors-per-track=0 --mem %ISO% (0xff)
+map --hook
+chainloader (0xff)
+### MENU END
+
+### MENU START
+title Test memory
+root (hd0,0)
+kernel /images/memtest/mt86plus
+### MENU END
